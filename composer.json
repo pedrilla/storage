@@ -1,0 +1,12 @@
+{
+  "name": "Storage",
+
+  "repositories": [
+    {"type": "git", "url": "https://github.com/pedrilla/light.git"}
+  ],
+
+  "require": {
+    "pedrilla/light": "dev-master",
+    "ralouphie/mimey": "*"
+  }
+}
