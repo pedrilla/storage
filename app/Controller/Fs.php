@@ -14,7 +14,7 @@ class Fs extends \Light\Controller
         return [];
     }
 
-    public function deleteFolderAction()
+    public function deleteFolder()
     {
         $config = Front::getInstance()->getConfig();
         $dirPath = realpath($config['fs']['path']) . $this->getRequest()->getGet('path');
