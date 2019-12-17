@@ -24,23 +24,44 @@ class Fs extends \Light\Controller
         return [];
     }
 
+    public function uploadFileApi()
+    {
+        $files = $this->mapFiles($_FILES);
+
+        $errors = [];
+
+        $config = Front::getInstance()->getConfig();
+
+        $copiedFiles = [];
+
+        foreach ($files as $file) {
+
+            try {
+
+                $folder = realpath($config['fs']['path']) . $this->getRequest()->getPost('path') . '/' . $this->getRequest()->getPost('folder');
+
+                if (!file_exists($folder)) {
+                    mkdir($folder);
+                }
+
+                $copiedFiles[] = $config['fs']['url'] . $this->getRequest()->getPost('path') . '/' . $this->getRequest()->getPost('folder') . '/' . $file['name'];
+                copy($file['tmpName'], $folder . '/' . $file['name']);
+            }
+            catch (\Exception $e) {
+                $errors[] = 'File "' . $file['name'] . '" was not uploaded. Reason: ' . $e->getMessage();
+            }
+        }
+
+        return [
+            'success' => count($errors) == 0,
+            'files' => $copiedFiles,
+            'errors' => $errors
+        ];
+    }
+
     public function uploadFile()
     {
-        $files = array_map(function($name, $type, $tmpName, $error, $size){
-            return [
-                'name' => $name,
-                'type' => $type,
-                'tmpName' => $tmpName,
-                'error' => $error,
-                'size' => $size
-            ];
-
-        },  $_FILES['files']['name'],
-            $_FILES['files']['type'],
-            $_FILES['files']['tmp_name'],
-            $_FILES['files']['error'],
-            $_FILES['files']['size']
-        );
+        $files = $this->mapFiles($_FILES);
 
         $errors = [];
 
@@ -116,5 +137,28 @@ class Fs extends \Light\Controller
         }
 
         rmdir($dirPath);
+    }
+
+    /**
+     * @param array $files
+     * @return array
+     */
+    public function mapFiles(array $files = [])
+    {
+        return array_map(function($name, $type, $tmpName, $error, $size){
+            return [
+                'name' => $name,
+                'type' => $type,
+                'tmpName' => $tmpName,
+                'error' => $error,
+                'size' => $size
+            ];
+
+        },  $_FILES['files']['name'],
+            $_FILES['files']['type'],
+            $_FILES['files']['tmp_name'],
+            $_FILES['files']['error'],
+            $_FILES['files']['size']
+        );
     }
 }
