@@ -313,6 +313,8 @@ a {
 
 .bmd-card-caption h5, .bmd-card-caption h6 {
     margin-top: 0px;
+    max-height: 27px;
+    overflow: hidden;
 }
 
 @media (max-width: 768px) {
