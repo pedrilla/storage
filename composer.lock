@@ -12,7 +12,7 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/pedrilla/light.git",
-                "reference": "63af8a6c33212577865e8e832cd0ebf880472051"
+                "reference": "f7b88755e1154c0b93fc4f6582c2099a5b69e841"
             },
             "require": {
                 "ext-json": "*",
@@ -33,7 +33,7 @@
                     "email": "execrot@gmail.com"
                 }
             ],
-            "time": "2020-01-03T16:44:52+00:00"
+            "time": "2020-01-03T23:14:18+00:00"
         },
         {
             "name": "ralouphie/mimey",

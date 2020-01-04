@@ -68,21 +68,6 @@ class Index extends Controller
         ]);
     }
 
-    public function downloadAction()
-    {
-        $file = realpath(Front::getInstance()->getConfig()['fs']['path'] . $this->getRequest()->getGet('path'));
-
-        $this->getResponse()->setHeaders([
-            'Content-Type' => 'application/octet-stream',
-            'Content-Transfer-Encoding' => 'Binary',
-            'Content-disposition' => 'attachment; filename="' . basename($file) . '"'
-        ]);
-
-        readfile($file);
-
-        die();
-    }
-
     public function index(){}
     public function update(){}
     public function tree(){}

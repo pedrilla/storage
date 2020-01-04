@@ -1,4 +1,5 @@
 var path = '/';
+var busy = false;
 
 if (!parent.selectImage) {
     $(document).ready(() => {
@@ -25,17 +26,16 @@ function navigate(path){
     update();
 }
 
-function uploadFileComplete(error){
+function uploadFileComplete(){
 
-    loader.hide();
-    $('[data-form-file]')[0].reset();
+    if (busy) {
+        loader.hide();
+        $('[data-form-file]')[0].reset();
 
-    if (error) {
-        modal.alert('<div class="alert alert-dismissible alert-danger">' + error + '</div>');
-        return;
+        update();
     }
 
-    update();
+    busy = false;
 }
 
 $(document).ready(function(){
@@ -142,7 +142,6 @@ $(document).ready(function(){
     $(document).on('submit', '[data-create-folder-form]', function(){
         $.post('/fs/createFolder', {name: $(this).find('[name=name]').val(), path: path}, function(r){
             if (!r.error) {
-                console.log("ksdjhfkjh");
                 modal.close();
                 update();
                 updateTree();
@@ -185,6 +184,7 @@ $(document).ready(function(){
 
 
     $('[data-form-file] input').on('change', function(){
+        busy = true;
         loader.show();
         $(this).closest('.bmd-fab-speed-dial-container').find('.press').removeClass('press');
         $('[data-form-file]').find('[name=path]').val(path);

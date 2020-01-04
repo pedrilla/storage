@@ -77,8 +77,7 @@ class Fs extends \Light\Controller
             }
         }
 
-        $this->getView()->setLayoutEnabled(false);
-        return "<script>parent.uploadFileComplete('" . implode('<br>', $errors) . "');</script>";
+        return ['errors' => $errors];
     }
 
     public function deleteFile()
