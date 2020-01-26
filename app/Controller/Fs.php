@@ -44,8 +44,11 @@ class Fs extends \Light\Controller
                     mkdir($folder);
                 }
 
-                $copiedFiles[] = $config['fs']['url'] . $this->getRequest()->getPost('path') . '/' . $this->getRequest()->getPost('folder') . '/' . $file['name'];
-                copy($file['tmpName'], $folder . '/' . $file['name']);
+                $fileNameParts = explode('.', $file['name']);
+                $fileName = md5(microtime()) . '.' . array_pop($fileNameParts);
+
+                $copiedFiles[] = $config['fs']['url'] . $this->getRequest()->getPost('path') . '/' . $this->getRequest()->getPost('folder') . '/' . $fileName;
+                copy($file['tmpName'], $folder . '/' . $fileName);
             }
             catch (\Exception $e) {
                 $errors[] = 'File "' . $file['name'] . '" was not uploaded. Reason: ' . $e->getMessage();
