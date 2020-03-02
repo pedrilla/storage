@@ -7,6 +7,7 @@
 
   "require": {
     "pedrilla/light": "dev-master",
-    "ralouphie/mimey": "*"
+    "ralouphie/mimey": "*",
+    "ext-fileinfo": "*"
   }
 }

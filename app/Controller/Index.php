@@ -3,13 +3,15 @@
 namespace App\Controller;
 
 use Exception;
-use Light\Controller;
 use Light\Front;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
 
-class Index extends Controller
+class Index extends Base
 {
+    /**
+     * @throws Exception
+     */
     public function init()
     {
         parent::init();
