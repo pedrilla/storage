@@ -40,7 +40,7 @@
                                 <form enctype="multipart/form-data"
                                       target="upload"
                                       data-form-file="true"
-                                      action="/fs/uploadFile"
+                                      action="/fs/uploadFile?key=<?php echo \Light\Cookie::get('authorized'); ?>"
                                       method="post">
                                     <input type="file" multiple="multiple" name="files[]" />
                                     <input type="hidden" name="path" value="/" />
