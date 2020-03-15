@@ -9,14 +9,14 @@ if (!parent.selectImage) {
 
 function update(){
     loader.show();
-    $.get('/index/update', {path: path, ajax: true}, function(content){
+    $.get('/index/update', {path: path, ajax: true, key: key}, function(content){
         $('[data-container]').html(content);
         loader.hide();
     });
 }
 
 function updateTree() {
-    $.get('/index/tree', {path: '/', ajax: true}, (branch) => {
+    $.get('/index/tree', {path: '/', ajax: true, key: key}, (branch) => {
         $('#treeview-sidebar-primary').html(branch);
     });
 }
@@ -64,7 +64,7 @@ $(document).ready(function(){
 
     $(document).on('submit', '[data-search-form]', function () {
         loader.show();
-        $.get('/index/search', {path: path, query: $(this).find('input').val()}, (content) => {
+        $.get('/index/search', {path: path, query: $(this).find('input').val(), key: key}, (content) => {
             $('[data-container]').html(content);
             loader.hide();
         });
@@ -83,7 +83,7 @@ $(document).ready(function(){
 
     $(document).on('click', '[data-tree]', function(){
 
-        $.get('/index/tree', {path: $(this).data('tree'), ajax: true}, (branch) => {
+        $.get('/index/tree', {path: $(this).data('tree'), ajax: true, key: key}, (branch) => {
 
             if ($(this).closest('li').find('ul').length) {
                 $(this).closest('li').find('ul').replaceWith(branch);
@@ -99,7 +99,7 @@ $(document).ready(function(){
     $(document).on('click', '[data-delete-folder]', function(){
         $(this).closest('.bmd-fab-speed-dial-container').find('.press').removeClass('press');
         modal.confirm('Delete folder?', () => {
-            $.get('/fs/deleteFolder', {path: $(this).data('delete-folder')}, (r) => {
+            $.get('/fs/deleteFolder', {path: $(this).data('delete-folder'), key: key}, (r) => {
                 if (!r.error) {
                     update();
                     updateTree();
@@ -112,7 +112,7 @@ $(document).ready(function(){
     $(document).on('click', '[data-delete-file]', function(){
         $(this).closest('.bmd-fab-speed-dial-container').find('.press').removeClass('press');
         modal.confirm('Delete file?', () => {
-            $.get('/fs/deleteFile', {path: $(this).data('delete-file')}, (r) => {
+            $.get('/fs/deleteFile', {path: $(this).data('delete-file'), key: key}, (r) => {
                 if (!r.error) {
                     update();
                 }
@@ -140,7 +140,7 @@ $(document).ready(function(){
     });
 
     $(document).on('submit', '[data-create-folder-form]', function(){
-        $.post('/fs/createFolder', {name: $(this).find('[name=name]').val(), path: path}, function(r){
+        $.post('/fs/createFolder', {name: $(this).find('[name=name]').val(), path: path, key: key}, function(r){
             if (!r.error) {
                 modal.close();
                 update();
@@ -165,7 +165,7 @@ $(document).ready(function(){
 
         loader.show();
 
-        $.post('/fs/uploadByUrl', {url: $(this).find('[name=url]').val(), path: path}, function(r){
+        $.post('/fs/uploadByUrl', {url: $(this).find('[name=url]').val(), path: path, key: key}, function(r){
 
             loader.hide();
 

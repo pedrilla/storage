@@ -16,7 +16,7 @@ abstract class Base extends Controller
         parent::init();
 
         if (Front::getInstance()->getConfig()['key'] == $this->getParam('key')) {
-            Cookie::set('authorized', true);
+            Cookie::set('authorized', $this->getParam('key'));
         }
 
         if (!Cookie::get('authorized')) {
